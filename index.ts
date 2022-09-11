@@ -1,3 +1,4 @@
+import { serve } from "https://deno.land/std@0.125.0/http/server.ts";
 import { fetchOption } from "./src/options.ts";
 
 export const hundler = (req: Request): Response => {
@@ -39,3 +40,5 @@ export const hundler = (req: Request): Response => {
     }),
   });
 };
+
+serve(hundler);
