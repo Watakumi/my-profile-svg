@@ -3,7 +3,6 @@ import { fetchOption } from "./src/options.ts";
 
 export const hundler = (req: Request): Response => {
   const url = new URL(req.url);
-  console.log(url.searchParams);
   const params = url.searchParams;
 
   const size = fetchOption(params.get("size") || "base");
@@ -34,11 +33,20 @@ export const hundler = (req: Request): Response => {
   </svg>`;
 
   // Success Response
-  return new Response(svg, {
-    headers: new Headers({
-      "Content-Type": "image/svg+xml",
-    }),
-  });
+  if (url.pathname.startsWith("/profile")) {
+    return new Response(svg, {
+      headers: new Headers({
+        "Content-Type": "image/svg+xml",
+      }),
+    });
+  } else {
+    return new Response("<html> Error </html>", {
+      status: 404,
+      headers: {
+        "content-type": "text/html",
+      },
+    });
+  }
 };
 
 serve(hundler);
